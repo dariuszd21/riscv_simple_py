@@ -16,15 +16,10 @@ dynamic = ["version"]
 [project.optional-dependencies]
 dev = [
     "black>=22.12.0",
-    "flit==3.8.0",
-    "isort==5.10.1",
-    "nox==2022.11.21",
-    "pytest==6.2.5",
-    "python-dateutil==2.8.2",
-    "requests==2.28.1",
-    "ruff==0.0.173",
-    "tqdm==4.51.0",
-    "uvicorn==0.17.6",
+    "flit>=3.8.0",
+    "isort>=5.10.1",
+    "pytest>=7.0.0",
+    "ruff>=0.0.173",
 ]
 
 [tool.black]
