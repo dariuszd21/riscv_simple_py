@@ -35,5 +35,11 @@ def cpu(bus_controller: BusController, register: Register) -> Cpu:
 def test_creating_cpu(cpu: Cpu) -> None:
     assert Cpu is not None, "Cpu object cannot be created."
 
-def test_cpu_init(cpu: Cpu) -> None:
+
+def test_cpu_init(cpu: Cpu, dram_memory: Dram) -> None:
     cpu.init()
+    assert cpu.pc == dram_memory.base, "Init should restore pc to beginning of memory."
+    assert cpu.registry[0] == 0, "First registry entry is hardwired to 0."
+    assert (
+        cpu.registry[2] == dram_memory.base + dram_memory.size
+    ), "Stack pointer should point to the top of memory."

@@ -1,5 +1,3 @@
-from typing import Dict
-
 from riscv_py_emu.bus.controller import BusController
 from riscv_py_emu.cpu.register import Register
 
