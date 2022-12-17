@@ -27,3 +27,7 @@ class Register(UserDict):
                 f", actual value {key}."
             )
         super().__setitem__(key, value)
+
+    def clean_registers(self, *, clear_value: int = 0) -> None:
+        for k in self.data:
+            self.data[k] = clear_value

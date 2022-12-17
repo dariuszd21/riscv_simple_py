@@ -10,8 +10,13 @@ class DramController:
 
     @property
     def dram_memory(self) -> bytes:
-        """Return internal memory object."""
+        """Return internal memory representation."""
         return self._dram.memory
+
+    @property
+    def dram(self) -> Dram:
+        """Expose DRAM object."""
+        return self._dram
 
     def load(self, address: int, *, size: OperationSize) -> int:
         """Load data of given size from memory."""

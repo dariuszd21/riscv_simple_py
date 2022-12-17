@@ -13,6 +13,15 @@ class Cpu:
         self._bus_controller = bus_controller
         self._register = register
 
+    def init(self) -> None:
+        """Restore CPU to the initial state."""
+        self._program_counter = self._bus_controller.dram_controller.dram.base
+        self.registry.clean_registers(clear_value=0)
+        self.registry[2] = (
+            self._bus_controller.dram_controller.dram.base
+            + self._bus_controller.dram_controller.dram.size
+        )
+
     @property
     def pc(self) -> int:
         """Return program counter value."""
