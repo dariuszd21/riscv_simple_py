@@ -1,10 +1,16 @@
+from dataclasses import dataclass, field
 from enum import Enum, IntEnum, auto
 
 
+@dataclass()
 class Dram:
-    BASE = 0x80000000  # Offset in which actual memory is accessible
-    SIZE = 1024 * 1024  # 1Mb
-    MEMORY = bytearray([0]) * SIZE
+    base: int = 0x80000000  # Offset in which actual memory is accessible
+    size: int = 1024 * 1024  # 1MiB
+    memory_initializer: int = 0
+    memory: bytearray = field(init=False)
+
+    def __post_init__(self) -> None:
+        self.memory = bytearray([self.memory_initializer]) * self.size
 
 
 class OperationSize(IntEnum):
