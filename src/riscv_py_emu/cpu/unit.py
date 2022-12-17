@@ -1,5 +1,6 @@
 from riscv_py_emu.bus.controller import BusController
 from riscv_py_emu.cpu.register import Register
+from riscv_py_emu.dram.memory import OperationSize
 
 
 class Cpu:
@@ -20,6 +21,12 @@ class Cpu:
         self.registry[2] = (
             self._bus_controller.dram_controller.dram.base
             + self._bus_controller.dram_controller.dram.size
+        )
+
+    def fetch(self) -> int:
+        """Return instruction stored under program counter."""
+        return self._bus_controller.load(
+            self._program_counter, size=OperationSize.UNIT_32
         )
 
     @property

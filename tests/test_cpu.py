@@ -4,7 +4,7 @@ from riscv_py_emu.bus.controller import BusController
 from riscv_py_emu.cpu.register import Register
 from riscv_py_emu.cpu.unit import Cpu
 from riscv_py_emu.dram.controller import DramController
-from riscv_py_emu.dram.memory import Dram
+from riscv_py_emu.dram.memory import Dram, OperationSize
 
 
 @pytest.fixture()
@@ -43,3 +43,15 @@ def test_cpu_init(cpu: Cpu, dram_memory: Dram) -> None:
     assert (
         cpu.registry[2] == dram_memory.base + dram_memory.size
     ), "Stack pointer should point to the top of memory."
+
+
+def test_cpu_fetch(cpu: Cpu, dram_memory: Dram, bus_controller: BusController) -> None:
+    cpu.init()
+    example_instruction = 2**10
+    bus_controller.store(
+        dram_memory.base, size=OperationSize.UNIT_32, value=example_instruction
+    )
+    example_instruction_fetched = cpu.fetch()
+    assert (
+        example_instruction_fetched == example_instruction
+    ), "CPU cannot correctly read instruction from beginning of the memory."

@@ -31,9 +31,9 @@ class DramController:
     def store(self, address: int, *, size: OperationSize, value: int) -> None:
         """Store value of given size in memory."""
         normalized_address = address - self._dram.base
-        self._memory_bounds_check(normalized_address, size=size)
         match size:  # noqa: E999
             case OperationSize(size):
+                self._memory_bounds_check(normalized_address, size=size)
                 return self._store(normalized_address, size=size, value=value)
             case _:
                 raise InvalidOperatorSize(f"Load of unexpected size: ({size})")
