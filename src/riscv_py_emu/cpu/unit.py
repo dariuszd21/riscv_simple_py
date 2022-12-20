@@ -1,6 +1,8 @@
 from riscv_py_emu.bus.controller import BusController
 from riscv_py_emu.cpu.register import Register
 from riscv_py_emu.dram.memory import OperationSize
+from riscv_py_emu.instruction.bits_parser import BitsParser
+from riscv_py_emu.instruction.opcode import Opcode
 
 
 class Cpu:
@@ -28,6 +30,15 @@ class Cpu:
         return self._bus_controller.load(
             self._program_counter, size=OperationSize.UNIT_32
         )
+
+    def exec(self) -> int:
+        operation = Opcode(BitsParser(offset=0, size=7).parse(self.fetch()))
+        print(operation.name, operation.value)
+        raise Exception("Not implemented yet.")
+
+    def loop(self) -> None:
+        while self.pc != 0:
+            self.exec()
 
     @property
     def pc(self) -> int:
