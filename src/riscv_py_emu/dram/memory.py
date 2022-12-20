@@ -19,6 +19,10 @@ class OperationSize(IntEnum):
     UNIT_32 = 4
     UINT_64 = 8
 
+    @property
+    def bit_size(self) -> int:
+        return 8 * self.value
+
 
 class MemoryOperation(Enum):
     LOAD = auto()
