@@ -4,7 +4,8 @@ from riscv_py_emu.dram.memory import OperationSize
 from riscv_py_emu.instruction.bits_parser import BitsParser
 from riscv_py_emu.instruction.opcode import Opcode
 from riscv_py_emu.instruction.rv32i_operations import exec_opp_imm
-from riscv_py_emu.instruction.rv32i_parsers import imm_j, rd
+from riscv_py_emu.instruction.rv32i_parsers import imm_j, imm_u, rd
+from riscv_py_emu.instruction.rv32i_ui_operations import lui
 
 
 class Cpu:
@@ -47,6 +48,12 @@ class Cpu:
                     self._program_counter += imm_j_val
                 case Opcode.OP_IMM:
                     exec_opp_imm(instruction, registry=self.registry)
+                    self._program_counter += 4
+                case Opcode.LUI:
+                    lui(instruction, registry=self.registry)
+                    self._program_counter += 4
+                case Opcode.AUIPC:
+                    self._program_counter += imm_u(instruction)
                     self._program_counter += 4
                 case _:
                     self._program_counter += 4
