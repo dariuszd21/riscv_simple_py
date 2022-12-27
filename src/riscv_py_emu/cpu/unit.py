@@ -5,7 +5,7 @@ from riscv_py_emu.instruction.bits_parser import BitsParser
 from riscv_py_emu.instruction.opcode import Opcode
 from riscv_py_emu.instruction.rv32i_operations import exec_opp_imm
 from riscv_py_emu.instruction.rv32i_parsers import imm_j, imm_u, rd
-from riscv_py_emu.instruction.rv32i_ui_operations import lui
+from riscv_py_emu.instruction.rv32i_ui_operations import auipc, lui
 
 
 class Cpu:
@@ -53,9 +53,10 @@ class Cpu:
                     lui(instruction, registry=self.registry)
                     self._program_counter += 4
                 case Opcode.AUIPC:
-                    self._program_counter += imm_u(instruction)
+                    auipc(instruction, pc=self.pc, registry=self.registry)
                     self._program_counter += 4
                 case _:
+                    raise NotImplementedError(operation.name)
                     self._program_counter += 4
         raise Exception("Not implemented yet.")
 

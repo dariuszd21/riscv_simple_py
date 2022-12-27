@@ -7,6 +7,6 @@ def lui(instruction: int, *, registry: Register) -> None:
     registry[rd(instruction)] = imm_u(instruction)
 
 
-def auipc(instruction: int, *, registry: Register) -> None:
+def auipc(instruction: int, *, pc: int, registry: Register) -> None:
     """Load upper intermediate into registy."""
-    registry[rd(instruction)] = imm_u(instruction)
+    registry[rd(instruction)] = pc + imm_u(instruction)
