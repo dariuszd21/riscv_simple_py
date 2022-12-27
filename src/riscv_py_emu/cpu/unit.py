@@ -3,6 +3,8 @@ from riscv_py_emu.cpu.register import Register
 from riscv_py_emu.dram.memory import OperationSize
 from riscv_py_emu.instruction.bits_parser import BitsParser
 from riscv_py_emu.instruction.opcode import Opcode
+from riscv_py_emu.instruction.rv32i_operations import exec_opp_imm
+from riscv_py_emu.instruction.rv32i_parsers import imm_j, rd
 
 
 class Cpu:
@@ -32,8 +34,22 @@ class Cpu:
         )
 
     def exec(self) -> int:
-        operation = Opcode(BitsParser(offset=0, size=7).parse(self.fetch()))
-        print(operation.name, operation.value)
+        while instruction := self.fetch():
+            print(f"Instruction: {instruction:0x}")
+            operation = Opcode(BitsParser(offset=0, size=7).parse(instruction))
+            print(operation.name, operation.value)
+            match operation:  # noqa: E999
+                case Opcode.JAL:
+                    rd_val = rd(instruction)
+                    imm_j_val = imm_j(instruction)
+                    print(f"RD: {rd_val}")
+                    print(f"Immediate: {imm_j_val}")
+                    self._program_counter += imm_j_val
+                case Opcode.OP_IMM:
+                    exec_opp_imm(instruction, registry=self.registry)
+                    self._program_counter += 4
+                case _:
+                    self._program_counter += 4
         raise Exception("Not implemented yet.")
 
     def loop(self) -> None:
