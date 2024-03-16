@@ -1,8 +1,7 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 set -x
 
-isort src/ tests/
 black src/ tests/
 ruff src/ tests/
 
