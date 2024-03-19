@@ -2,6 +2,6 @@
 
 set -x
 
-black src/ tests/
+ruff format --check src/ tests/
 ruff src/ tests/
 

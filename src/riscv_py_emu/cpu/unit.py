@@ -39,7 +39,7 @@ class Cpu:
             print(f"Instruction: {instruction:0x}")
             operation = Opcode(BitsParser(offset=0, size=7).parse(instruction))
             print(operation.name, operation.value)
-            match operation:  # noqa: E999
+            match operation:
                 case Opcode.JAL:
                     rd_val = rd(instruction)
                     imm_j_val = imm_j(instruction)

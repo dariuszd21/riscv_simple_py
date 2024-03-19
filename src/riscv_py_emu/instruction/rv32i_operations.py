@@ -24,7 +24,7 @@ def exec_opp_imm(instruction: int, *, registry: Register) -> None:
     """Execute immediate integer operation"""
     f3 = OpImmFunc3(funct3(instruction))
     print(f"Executing f3: {f3.name}")
-    match f3:  # noqa: E999
+    match f3:
         case OpImmFunc3.ADDI:
             addi(instruction, registry=registry)
         case OpImmFunc3.SLTI:
