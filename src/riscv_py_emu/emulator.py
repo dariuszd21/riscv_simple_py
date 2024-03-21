@@ -7,7 +7,8 @@ from riscv_py_emu.cpu.unit import Cpu
 from riscv_py_emu.dram.controller import DramController
 from riscv_py_emu.dram.memory import Dram
 
-if __name__ == "__main__":
+
+def main() -> None:
     assert len(argv) == 2
     binary_path = Path(argv[1])
     assert binary_path.is_file(), "Provided path is file"
@@ -21,3 +22,7 @@ if __name__ == "__main__":
     cpu = Cpu(bus_controller=bus_controller, register=register)
     cpu.init()
     cpu.loop()
+
+
+if __name__ == "__main__":
+    main()

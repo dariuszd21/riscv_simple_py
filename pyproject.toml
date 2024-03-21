@@ -33,7 +33,7 @@ exclude = [
     "venv",
 ]
 
-# TODO: Check those, once nwewr version will be released in NixOS
+# TODO: Check those, once newer version will be released in NixOS
 # pyflakes, flake8-bugbear, pycodestyle, isort
 select = ["F", "B", "E", "W", "I"]
 
